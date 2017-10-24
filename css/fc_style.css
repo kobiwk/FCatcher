@@ -1,22 +1,54 @@
-.fc-title {
-	font-size: 3rem;
-	text-transform: uppercase;
-	text-align: center;
-}
+#rssOutput {
+  display: flex;
+  flex-direction: row; }
+  #rssOutput .fc-title-rss {
+    width: 30%;
+    color: black; }
+    #rssOutput .fc-title-rss h3 {
+      font-size: 2rem;
+      line-height: 1rem; }
+  #rssOutput .fc-main-text {
+    width: 60%;
+    margin-left: 1rem; }
+    #rssOutput .fc-main-text .fc-add-to-title {
+      color: green;
+      text-transform: uppercase; }
+    #rssOutput .fc-main-text .fc-feed-title {
+      font-size: 1.5rem;
+      margin: 0.5rem 0;
+      line-height: 1.6rem; }
+      #rssOutput .fc-main-text .fc-feed-title a {
+        text-decoration: none;
+        text-transform: uppercase; }
+    #rssOutput .fc-main-text .showPage {
+      color: green;
+      text-decoration: none;
+      padding-right: 2rem; }
 
-.fc-top {
-	margin-top: 3rem;
-}
+#html-page {
+  position: absolute;
+  top: 1%;
+  z-index: 9999; }
+  #html-page #close {
+    width: 900px;
+    height: 3rem;
+    background-color: white;
+    color: white;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-top: 2px solid black; }
+    #html-page #close a {
+      text-decoration: none;
+      text-transform: uppercase;
+      padding-left: 1rem;
+      font-size: 1.5rem;
+      line-height: 3rem;
+      color: black; }
+  #html-page iframe {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+    width: 900px;
+    height: 900px; }
 
-.fc-control-form {
-	
-}
-
-.fc-container-title {
-
-}
-
-.fc-title-rss {
-
-	width: 20rem;
-}
+/*# sourceMappingURL=fc_style.css.map */

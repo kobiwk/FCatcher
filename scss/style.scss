@@ -1,0 +1,83 @@
+@mixin transform-link() {
+	text-decoration: none;
+	text-transform: uppercase;
+}
+
+@mixin border-for-iframe($size) {
+	border-left: $size solid black;
+	border-right: $size solid black;
+}
+
+
+$primary-color: white;
+
+.fc-main {
+
+
+}
+#rssOutput {
+	display: flex;
+	flex-direction: row;
+	.fc-title-rss {
+		width: 30%;
+		color: black;
+		h3 {
+			font-size: 2rem;
+			line-height: 1rem;
+		}
+	}
+
+	.fc-main-text {
+		width: 60%;
+		margin-left: 1rem;
+
+		.fc-add-to-title {
+			color: green;
+			text-transform: uppercase;
+		}
+
+		.fc-feed-title {
+			font-size: 1.5rem;
+			margin: 0.5rem 0;
+			line-height: 1.6rem;
+			a {
+				@include transform-link();
+			}
+		}
+
+		.showPage {
+			color: green;
+			text-decoration: none;
+			padding-right: 2rem;
+		}
+	}
+}
+
+#html-page {
+	position: absolute;
+	top: 1%;
+	z-index: 9999;
+
+	#close {
+		width: 900px;
+		height: 3rem;
+		background-color: $primary-color;
+		color: white;
+		@include border-for-iframe(2px);
+		border-top: 2px solid black;
+		a {
+			@include transform-link();
+			padding-left: 1rem;
+			font-size: 1.5rem;
+			line-height: 3rem;
+			color: black;
+		}
+	}
+	iframe {
+		@include border-for-iframe(2px);
+		border-bottom: 2px solid black;
+		width: 900px;
+		height: 900px;
+	}
+}
+
