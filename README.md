@@ -4,4 +4,4 @@ Exercise 1
 
 Wordpress plugin -> RSS news catcher
 
-Third line of text
+Rough and maybe last version, ain't gonna work on it for a while.
