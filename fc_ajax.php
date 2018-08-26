@@ -8,7 +8,8 @@ do_action( 'wp_ajax_my_action', 'fc_ajax_php_action_body' );
 
 function fc_ajax_php_action_body() 
 {
-	$q = $_GET["q"];
+
+	$q = isset( $_GET["q"]) ? $_GET["q"] : null;
 
 	if (isset($q))
 	{
