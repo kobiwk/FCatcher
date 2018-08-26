@@ -5,52 +5,76 @@ document.addEventListener('DOMContentLoaded', function() {
 		}, false);
 
 function showRSS(event) {
-  if (event.target.value.length === 0) {
-    document.getElementById('rssOutput').innerHTML = '';
-    return;
+
+    if (event.target.value.length === 0) {
+        document.getElementById('rssOutput').innerHTML = '';
+        return;
 	} 
 
-//AJAX
-if (window.XMLHttpRequest) {
-    xmlhttp = new XMLHttpRequest;
-}
+	jQuery.post( 
+		ajaxurl, 
+		{ 'action': 'get_rss',
+		  'test': "test",
+		  'title': event.target.value
+		}, 
+		function(response) {
+			console.log( 'The server responded: ', response);
+			jQuery('#rssOutput').html(response);
+		}
+	);
+	
 
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200 ) {
-	document.getElementById('rssOutput').innerHTML = this.responseText;
 
-	//Open window with the proper content
-	var openLinkInWindow = document.getElementsByClassName('showPage');
 
-	for (var k = 0; k < openLinkInWindow.length; k++) {
-    openLinkInWindow[k].addEventListener('click', function(e) {
-	    e.preventDefault();
-	    document.getElementById('html-page').innerHTML = 
-	    	'<div id="close"><a class="closeRead" href="#">x</a></div><iframe src="' + this.href + '"></iframe>';
-	    	
-	    	//change background to something, after opening
-	    	document.body.style.backgroundColor = "transparent";
-	    	
+	//AJAX
 
-	    	//Close window with full html page
-			var closeWindow = document.getElementsByClassName('closeRead');
+	/*
+	can't remeber what I wanted to do with this
+	if (window.XMLHttpRequest) {
 
-			for (var i = 0; i < closeWindow.length; i++) {
-				closeWindow[i].addEventListener('click', function(event){
-					event.preventDefault();
-					document.getElementById('html-page').innerHTML='';
+	    xmlhttp = new XMLHttpRequest;
 
-				});
-			}
-	    }); 
-    } //for
+	}
+	console.log( xmlhttp );
+	xmlhttp.onreadystatechange = function() {
+		
+	  if (this.readyState == 4 && this.status == 200 ) {
 
-  } //if
+			document.getElementById('rssOutput').innerHTML = this.responseText;
+
+			//Open window with the proper content
+			var openLinkInWindow = document.getElementsByClassName('showPage');
+
+			for (var k = 0; k < openLinkInWindow.length; k++) {
+
+	    		openLinkInWindow[k].addEventListener('click', function(e) {
+		    		e.preventDefault();
+		    		document.getElementById('html-page').innerHTML = 
+		    		'<div id="close"><a class="closeRead" href="#">x</a></div><iframe src="' + this.href + '"></iframe>';
+		    	
+			    	//change background to something, after opening
+			    	document.body.style.backgroundColor = "transparent";
+			    	
+
+			    	//Close window with full html page
+					var closeWindow = document.getElementsByClassName('closeRead');
+
+					for (var i = 0; i < closeWindow.length; i++) {
+						closeWindow[i].addEventListener('click', function(event){
+							event.preventDefault();
+							document.getElementById('html-page').innerHTML='';
+
+						});
+					}
+			    }); 
+		    } //for
+
+	  } //if
 	} //onreadystatechange		
 
 	xmlhttp.open('GET', 'admin-ajax.php?q=' + event.target.value, true);
 	xmlhttp.send();
-
+	*/
 
 }
 

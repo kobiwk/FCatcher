@@ -1,37 +1,49 @@
 <?php
 
-//AJAH PHP
-add_action('wp_ajax_my_action', 'fc_ajax_php_action_body');
+//AJAX PHP
+add_action('wp_ajax_get_rss', 'fc_ajax_get_rss');
 
-do_action( 'wp_ajax_my_action', 'fc_ajax_php_action_body' );
+//do_action( 'wp_ajax_get_rss', 'fc_ajax_get_rss' );
 
 
-function fc_ajax_php_action_body() 
+function fc_ajax_get_rss() 
 {
+	//$q = isset( $_GET["q"]) ? $_GET["q"] : null;
+	//echo "punk: ". $_GET["q"];
+	foreach (get_option('snimanje') as $options) {
 
-	$q = isset( $_GET["q"]) ? $_GET["q"] : null;
+		foreach ($options as $option_name => $option_link ) {
 
-	if (isset($q))
-	{
-		foreach (get_option('snimanje') as $options)
-		{
-			foreach ($options as $option_name => $option_link )
-			{
-				if ($q == $option_name )
-				{
-					$xml = $option_link;
-				}
+			if ( $_POST['title'] == $option_name ) {
+				$rss_link = $option_link;
 			}
 		}
+	}
+	//$ch = curl_init("https://davidwalsh.name/feed");
+	$ch = curl_init($rss_link);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+	$content = curl_exec($ch);
+	curl_close($ch);
+
+	echo $content;
+	//$xmlDoc = new DOMDocument();
+
+
+
+	if ( 1 == 2 )
+	{
+
+		
 
 		$xmlDoc = new DOMDocument();
 
 		if ($xml)
 		{
-			$xmlDoc -> load($xml);
+			$xmlDoc->load($xml);
 
 			//title of RSS feed
-			$channel = $xmlDoc -> getElementsByTagName('channel')->item(0);
+			$channel = $xmlDoc->getElementsByTagName('channel')->item(0);
 			
 			$channel_title = $channel->getElementsByTagName('title')->item(0)->childNodes->item(0)->nodeValue;
 			
@@ -39,7 +51,7 @@ function fc_ajax_php_action_body()
 			
 			$channel_desc = $channel->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
 
-			echo("<div class='fc-title-rss'><h3><a href='" . $channel_link . "'>" . $channel_title . "</a></h3><br>" . $channel_desc . "</div>");
+			echo("<div class='fc-title-rss'><h3>kkkkkkkkk<a href='" . $channel_link . "'>" . $channel_title . "</a></h3><br>" . $channel_desc . "</div>");
 
 		}
 
