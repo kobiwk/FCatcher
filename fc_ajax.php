@@ -37,6 +37,7 @@ function fc_ajax_get_rss()
 		
 		$channel_desc = $channel->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
 
+
 		echo("<div class='fc-title-rss'><h3><a href='" . $channel_link . "'>" . $channel_title . "</a></h3><br>" . $channel_desc . "</div>");
 		echo ("<div class='fc-main-text'>");
 			$main = $xmlDoc -> getElementsByTagName('item');
@@ -53,12 +54,24 @@ function fc_ajax_get_rss()
 
 			$item_link = $main -> item($i) -> getElementsByTagName('link')->item(0)->childNodes->item(0)->nodeValue;
 
-			$item_desc = $main -> item($i) -> getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
+
+			// for cases when 'description' tag has more children
+			for ( $j = 0; $j <= 1; $j++ ) {
+				if ( $main -> item($i) -> getElementsByTagName('description')->item(0)->childNodes->item($j)->nodeValue != "") {
+					$item_desc .= "<p>".$main -> item($i) -> getElementsByTagName('description')->item(0)->childNodes->item($j)->nodeValue."</p>";
+				}
+			}
+
 
 			echo ("<p><a href = '" . $item_link . "'><h2 class='fc-feed-title'>" . $item_title . "</h2></a>" . "<span class='fc-add-to-title'> <a href='".$item_link . "' class='showPage'>Read more</a>" . " Publish </span><br>".$item_desc . "</p>");
+
+			// reset 'description' child node text
+			$item_desc = "";
 		}
 		echo ("</div>");
 		exit; //wp_die(); prevents 0 output
+	} else {
+		echo "<div class='fc-title-rss'><h3>Selected RSS feed url's to follow, in Settings section.</h3></div>";
 	}
     
 
