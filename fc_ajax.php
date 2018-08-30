@@ -7,7 +7,6 @@ add_action('wp_ajax_get_rss', 'fc_ajax_get_rss');
 
 function fc_ajax_get_rss() 
 {
-
 	foreach (get_option('snimanje') as $options) {
 
 		foreach ($options as $option_name => $option_link ) {
@@ -19,7 +18,6 @@ function fc_ajax_get_rss()
 	}
 
 	/* Warning. I had to install DomDocument class firstly, through terminal. */
-
 
 	if (!empty( $rss_link ) ) {
 
@@ -38,9 +36,10 @@ function fc_ajax_get_rss()
 		$channel_desc = $channel->getElementsByTagName('description')->item(0)->childNodes->item(0)->nodeValue;
 
 
-		echo("<div class='fc-title-rss'><h3><a href='" . $channel_link . "'>" . $channel_title . "</a></h3><br>" . $channel_desc . "</div>");
-		echo ("<div class='fc-main-text'>");
-			$main = $xmlDoc -> getElementsByTagName('item');
+		echo "<div class='fc-title-rss'><h3><a href='" . $channel_link . "'>" . $channel_title . "</a></h3><br>" . $channel_desc . "</div>";
+		echo "<div class='fc-main-text'>";
+		echo "<div class='load-url-here'></div>";
+		$main = $xmlDoc -> getElementsByTagName('item');
 			
 		if (get_option('broj_fidova')) {
 			$feed_number = get_option('broj_fidova');
@@ -54,7 +53,18 @@ function fc_ajax_get_rss()
 
 			$item_link = $main -> item($i) -> getElementsByTagName('link')->item(0)->childNodes->item(0)->nodeValue;
 
+			echo "<pre> Find link bre";
+			$findLink = $main->item($i)->childNodes->length;
 
+			for ( $k = 0; $k < $findLink; $k++) {
+				if ( $main->item($i)->childNodes->item($k)->nodeName == "#text" || $main->item($i)->childNodes->item($k)->nodeName == "guid" ) {
+					echo $main->item($i)->childNodes->item($k)->textContent;
+				}		
+
+			}
+			
+			//print_r($main->item($i)->childNodes->item(2));
+			echo "</pre>";
 			// for cases when 'description' tag has more children
 			for ( $j = 0; $j <= 1; $j++ ) {
 				if ( $main -> item($i) -> getElementsByTagName('description')->item(0)->childNodes->item($j)->nodeValue != "") {
@@ -63,12 +73,12 @@ function fc_ajax_get_rss()
 			}
 
 
-			echo ("<p><a href = '" . $item_link . "'><h2 class='fc-feed-title'>" . $item_title . "</h2></a>" . "<span class='fc-add-to-title'> <a href='".$item_link . "' class='showPage'>Read more</a>" . " Publish </span><br>".$item_desc . "</p>");
+			echo "<p><a href = '" . $item_link . "'><h2 class='fc-feed-title'>" . $item_title . "</h2></a>" . "<span class='fc-add-to-title'> <a href='".$item_link . "' class='showPage'>Read more</a>" . " Publish </span><br>".$item_desc . "</p>";
 
 			// reset 'description' child node text
 			$item_desc = "";
 		}
-		echo ("</div>");
+		echo "</div>";
 		exit; //wp_die(); prevents 0 output
 	} else {
 		echo "<div class='fc-title-rss'><h3>Selected RSS feed url's to follow, in Settings section.</h3></div>";

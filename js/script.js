@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', function() {
 		  document.querySelector('select[name="onChange"]').onchange=showRSS;	
 		}, false);
@@ -78,7 +76,11 @@ function showRSS(event) {
 
 }
 
-
+var loadElement = document.getElementsByClassName('load-url-here');
+jQuery( document ).on('click', '.showPage', function(e) {
+	e.preventDefault();
+	loadElement[0].innerHTML = "pasmaters";
+});
 
 
 
